@@ -1,8 +1,9 @@
 
-
 const App = () => {
   return (
-    <div>App</div>
+    <div className="flex flex-col items-center mt-5">
+
+    </div>
   )
 }
 
