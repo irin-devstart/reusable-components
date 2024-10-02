@@ -30,7 +30,7 @@ const justifyContents: Record<TJustifyContent, string> = {
   "justify-start": "justify-start",
 };
 
-const alignItemsClass: Record<TAlignItems, string> = {
+const alignItems: Record<TAlignItems, string> = {
   "items-start": "items-start",
   "items-end": "items-end",
   "items-center": "items-center",
@@ -40,10 +40,11 @@ const alignItemsClass: Record<TAlignItems, string> = {
 
 interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: TDirection;
-  rowGap?: string;
-  columnGap?: string;
+  rowGap?: number;
+  columnGap?: number;
   justifyContent?: TJustifyContent;
-  alignItems?: TAlignItems;
+  alignItem?: TAlignItems;
+  flexBasis?: string;
   flex?: number;
 }
 const FlexBox = ({
@@ -53,8 +54,10 @@ const FlexBox = ({
   columnGap,
   className,
   justifyContent = "justify-normal",
-  alignItems = "items-baseline",
+  alignItem = "items-baseline",
+  flexBasis = "100%",
   children,
+  style,
   ...props
 }: FlexBoxProps) => {
   return (
@@ -64,12 +67,16 @@ const FlexBox = ({
         className,
         directions[direction],
         justifyContents[justifyContent],
-        alignItemsClass[alignItems],
-        "flex w-[100%]",
-        flex ? `flex-[${flex}]` : "",
-        columnGap ? `gap-x-[${columnGap}]` : "",
-        rowGap ? `gap-y-[${rowGap}]` : ""
+        alignItems[alignItem],
+        "flex w-full"
       )}
+      style={{
+        ...style,
+        flex: flex,
+        flexBasis: flexBasis,
+        rowGap: rowGap ? `${rowGap}px` : undefined,
+        columnGap: columnGap ? `${columnGap}px` : undefined,
+      }}
     >
       {children}
     </div>
